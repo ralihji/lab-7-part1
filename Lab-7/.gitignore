@@ -1,0 +1,6 @@
+# Fichiers système et éditeurs (les dossiers client/ et server/ ont leur propre .gitignore)
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml

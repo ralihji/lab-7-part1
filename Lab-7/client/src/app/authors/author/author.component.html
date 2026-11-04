@@ -1,0 +1,38 @@
+@if (status === 'found' && author) {
+  <h2>Here are details of the Author {{ author.id }}</h2>
+  <div class="row">
+    <div class="col-3">First name:</div>
+    <div class="col-9">{{ author.firstName }}</div>
+  </div>
+  <div class="row">
+    <div class="col-3">Last name:</div>
+    <div class="col-9">{{ author.lastName }}</div>
+  </div>
+  <div class="row">
+    <div class="col-3">Books:</div>
+    <div class="col-9">
+      @for (book of author.books; track $index) {
+        @if (book.id !== null) {
+          <a [routerLink]="['/books', book.id]">{{ book.title }}</a><br>
+        } @else {
+          {{ book.title }}<br>
+        }
+      } @empty {
+        No books
+      }
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3">Biography:</div>
+    <div class="col-9">
+      @switch (bioStatus) {
+        @case ('loading') { Loading… }
+        @case ('loaded') { {{ biography }} }
+        @case ('empty') { No biography available. }
+        @case ('unavailable') { The biography could not be loaded. }
+      }
+    </div>
+  </div>
+} @else {
+  <h2>{{ message }}</h2>
+}
