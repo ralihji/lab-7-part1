@@ -1,0 +1,72 @@
+.state-loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #3465a4;
+}
+
+.author-card {
+  border-color: #c9d6ea;
+  box-shadow: 0 2px 6px rgba(0, 0, 80, 0.08);
+}
+
+.author-header {
+  background-color: #3465a4;
+  color: white;
+  padding: 14px 18px;
+}
+
+.author-badge {
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.author-name {
+  margin: 2px 0 0;
+  font-weight: 700;
+}
+
+.author-info dt {
+  color: #555;
+  font-weight: 600;
+}
+
+.section-title {
+  color: #3465a4;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 18px 0 10px;
+}
+
+.book-list .list-group-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.book-link {
+  color: #0000b3;
+  font-weight: 600;
+}
+
+.book-link:hover {
+  color: #e60000;
+}
+
+.book-id {
+  color: #777;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.bio {
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.author-alert strong {
+  margin-right: 4px;
+}

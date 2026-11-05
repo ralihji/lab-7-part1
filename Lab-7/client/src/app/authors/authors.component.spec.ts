@@ -94,4 +94,30 @@ describe('AuthorsComponent', () => {
     expect(component.authorId.value).toBe('12');
     httpMock.expectOne(API + 'authors/12').flush(null, {status: 404, statusText: 'Not Found'});
   });
+
+  // Partie interface : ce que l'utilisateur voit dans la page
+  describe('display', () => {
+    it('shows the form with an Author Id field and a Search button', () => {
+      const page = harness.routeNativeElement as HTMLElement;
+
+      expect(page.querySelector('h2')?.textContent).toContain('Search our Authors');
+      expect(page.querySelector('label[for="authorId"]')?.textContent).toContain('Author Id');
+      expect(page.querySelector('input#authorId')).not.toBeNull();
+      expect(page.querySelector('button[type="submit"]')?.textContent).toContain('Search');
+    });
+
+    it('shows the validation message under the field after an invalid submit', () => {
+      const page = harness.routeNativeElement as HTMLElement;
+      const input = page.querySelector('input#authorId') as HTMLInputElement;
+      input.value = 'abc';
+      input.dispatchEvent(new Event('input'));
+      page.querySelector('form')!.dispatchEvent(new Event('submit'));
+      harness.detectChanges();
+
+      expect(input.classList).toContain('is-invalid');
+      expect(page.querySelector('.invalid-feedback')?.textContent)
+        .toContain('The author id must be a whole number greater than 0.');
+      expect(router.url).toBe('/authors');
+    });
+  });
 });

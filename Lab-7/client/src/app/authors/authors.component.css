@@ -1,0 +1,43 @@
+.authors {
+  padding-top: 8px;
+}
+
+.page-title {
+  color: #3465a4;
+  font-weight: 700;
+}
+
+.page-hint {
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.search-form {
+  max-width: 420px;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: 600;
+}
+
+/* Mêmes couleurs que la barre de navigation (bleu, rouge au survol) */
+.btn-search {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: #0000b3;
+  --bs-btn-border-color: #0000b3;
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #e60000;
+  --bs-btn-hover-border-color: #e60000;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #b30000;
+  --bs-btn-active-border-color: #b30000;
+  --bs-btn-focus-shadow-rgb: 0, 0, 179;
+  padding-left: 22px;
+  padding-right: 22px;
+}
+
+.form-control:not(.is-invalid):focus {
+  border-color: #3465a4;
+  box-shadow: 0 0 0 0.2rem rgba(52, 101, 164, 0.25);
+}

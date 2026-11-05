@@ -1,14 +1,23 @@
-<div>
-  <h2>Search our Authors</h2>
-  <form [formGroup]="searchForm" (ngSubmit)="onSubmit()" novalidate>
-    <label for="authorId">Author Id:</label>
-    <input type="text" id="authorId" formControlName="authorId">
-    <button type="submit">Search</button>
-    @if (showError) {
-      <div class="alert alert-danger">{{ validationMessage }}</div>
-    }
+<section class="authors">
+  <h2 class="page-title">Search our Authors</h2>
+  <p class="page-hint">Enter the id of an author to see their name, their books and their biography.</p>
+
+  <form class="search-form" [formGroup]="searchForm" (ngSubmit)="onSubmit()" novalidate>
+    <label for="authorId" class="form-label">Author Id</label>
+    <div class="input-group has-validation">
+      <input type="text" inputmode="numeric" id="authorId" class="form-control"
+             formControlName="authorId" placeholder="e.g. 1" autocomplete="off"
+             [class.is-invalid]="showError"
+             [attr.aria-invalid]="showError"
+             aria-describedby="authorIdFeedback">
+      <button type="submit" class="btn btn-search">Search</button>
+      @if (showError) {
+        <div id="authorIdFeedback" class="invalid-feedback">{{ validationMessage }}</div>
+      }
+    </div>
   </form>
-  <div class="container">
+
+  <div class="author-result">
     <router-outlet></router-outlet>
   </div>
-</div>
+</section>

@@ -7,6 +7,17 @@ a:link, a:visited {
   display: inline-block;
 }
 
+/* Page ouverte : bleu plus foncé et barre ambre en bas du bouton */
+a.active {
+  background-color: #00007a;
+  box-shadow: inset 0 -4px 0 #ffc107;
+}
+
 a:hover, a:active {
   background-color: #e60000;
+}
+
+a:focus-visible {
+  outline: 3px solid #ffc107;
+  outline-offset: 2px;
 }

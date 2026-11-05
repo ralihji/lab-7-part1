@@ -128,4 +128,59 @@ describe('AuthorComponent', () => {
     httpMock.expectOne(API + 'authors/5').flush(null, {status: 404, statusText: 'Not Found'});
     expect(component.message).toBe('Sorry, no author was found with id 5.');
   });
+
+  // Partie interface : ce que l'utilisateur voit dans la page
+  describe('display', () => {
+    const page = () => harness.routeNativeElement as HTMLElement;
+
+    it('shows a loading indicator while waiting for the API', async () => {
+      await open('4');
+
+      expect(page().querySelector('[role="status"]')?.textContent).toContain('Loading author 4');
+      httpMock.expectOne(API + 'authors/4').flush(null, {status: 404, statusText: 'Not Found'});
+    });
+
+    it('shows the name, the books as links to /books/:id and the biography', async () => {
+      await open('4');
+      httpMock.expectOne(API + 'authors/4').flush(KOREDO);
+      httpMock.expectOne(API + 'authors/4/bio').flush({id: 4, biodata: 'Software architect.'});
+      harness.detectChanges();
+
+      expect(page().querySelector('.author-badge')?.textContent).toContain('Author #4');
+      expect(page().querySelector('.author-name')?.textContent).toContain('Koredo Tablanga');
+      const links = Array.from(page().querySelectorAll('a.book-link'));
+      expect(links.map(link => link.textContent?.trim())).toEqual(['SpringBoot JPA and REST', 'Angular for Beginners']);
+      expect(links[0].getAttribute('href')).toBe('/books/1');
+      expect(page().querySelector('.bio')?.textContent).toContain('Software architect.');
+    });
+
+    it('shows "No biography available." when the biography is empty', async () => {
+      await open('4');
+      httpMock.expectOne(API + 'authors/4').flush({...KOREDO, books: []});
+      httpMock.expectOne(API + 'authors/4/bio').flush({id: 4, biodata: ''});
+      harness.detectChanges();
+
+      expect(page().textContent).toContain('No books for this author yet.');
+      expect(page().querySelector('.bio')?.textContent).toContain('No biography available.');
+    });
+
+    it('shows a warning and no author card when the author is not found', async () => {
+      await open('99');
+      httpMock.expectOne(API + 'authors/99').flush(null, {status: 404, statusText: 'Not Found'});
+      harness.detectChanges();
+
+      const alert = page().querySelector('.alert-warning');
+      expect(alert?.textContent).toContain('Author not found.');
+      expect(alert?.textContent).toContain('Sorry, no author was found with id 99.');
+      expect(page().querySelector('.author-card')).toBeNull();
+    });
+
+    it('shows an error when the server cannot be reached', async () => {
+      await open('4');
+      httpMock.expectOne(API + 'authors/4').error(new ProgressEvent('error'), {status: 0, statusText: 'Unknown Error'});
+      harness.detectChanges();
+
+      expect(page().querySelector('.alert-danger')?.textContent).toContain('Unable to reach the Books API');
+    });
+  });
 });
